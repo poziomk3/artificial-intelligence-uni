@@ -6,6 +6,7 @@ from lab1.optimized.algo_commons import *
 from lab1.optimized.djikstra_time import *
 from lab1.optimized.read_graph import *
 import pandas as pd
+import time
 
 FILE_PATH = "../connection_graph.csv"
 GRAPH_FILE = "graph.gpickle"
@@ -16,14 +17,9 @@ if __name__ == "__main__":
     # print_all_nodes(graph)
     # print_edge(graph, "DWORZEC AUTOBUSOWY", "EPI")
     start_stop = "PL. GRUNWALDZKI"
-    end_stop = "GALERIA DOMINIKAŃSKA"
+    end_stop = "EPI"
     start_time = pd.Timestamp("16:30:00")
 
-    result_astar_transfers = a_star_minimize_line_changes(graph, start_stop, end_stop, start_time, manhattan_distance)
-    print_algo_result(result_astar_transfers)
-
-    result_astar_time = a_star_fastest_route(graph, start_stop, end_stop, start_time, euclidean_distance)
-    print_algo_result(result_astar_time)
-
-    result = dijkstra_fastest_route(graph, start_stop, end_stop, start_time)
-    print_algo_result(result)
+    a_star_minimize_line_changes(graph, start_stop, end_stop, start_time, manhattan_distance)
+    a_star_fastest_route(graph, start_stop, end_stop, start_time, euclidean_distance)
+    dijkstra_fastest_route(graph, start_stop, end_stop, start_time)

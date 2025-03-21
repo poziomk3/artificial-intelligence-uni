@@ -36,21 +36,17 @@ def print_algo_result(result: Optional[Tuple[List[Tuple[str, str, str, pd.Timest
     for edge in path_edges:
         from_stop, to_stop, line, departure, arrival = edge
 
-        # Print when entering a new line
         if line != previous_line:
             if previous_line is not None:
                 print(f"🚏 Change at: {from_stop} at {departure.strftime('%H:%M:%S')}\n")
             print(f"🚌 Line {line} | Board at {from_stop} at {departure.strftime('%H:%M:%S')}")
 
-        # Print the next stop in sequence
         print(f"   → {to_stop} (Arrives at {arrival.strftime('%H:%M:%S')})")
 
         previous_line = line  # Update previous line
 
-    # Final stop arrival
     print(f"\n⏳ Arrived at {to_stop} at {arrival.strftime('%H:%M:%S')}")
 
-    # Print total travel time
     print(f"\n🕒 Total cost: {cost}")
 
 

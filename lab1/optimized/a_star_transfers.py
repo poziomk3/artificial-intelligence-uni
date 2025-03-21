@@ -4,8 +4,11 @@ import pandas as pd
 from typing import Tuple, List, Optional
 
 from lab1.optimized.algo_commons import init_algo
+from lab1.optimized.utils import log_route_info, format_algo_result
 
 
+@format_algo_result
+@log_route_info(algo_name="A* with line changes")
 def a_star_minimize_line_changes(
         graph: nx.DiGraph,
         start: str,
@@ -30,11 +33,9 @@ def a_star_minimize_line_changes(
         open_set.discard(current_stop)
         closed_set.add(current_stop)
 
-        # If the destination is reached, return the path and total line changes
         if current_stop == end:
             return path, line_changes
 
-        # Explore neighbors
         for neighbor in graph.neighbors(current_stop):
             if neighbor in closed_set:
                 continue  # Skip already processed nodes

@@ -5,8 +5,11 @@ import logging
 from typing import Tuple, List, Optional
 
 from lab1.optimized.algo_commons import init_algo
+from lab1.optimized.utils import log_route_info, format_algo_result
 
 
+@format_algo_result
+@log_route_info(algo_name="Djikstra with time")
 def dijkstra_fastest_route(graph: nx.DiGraph, start: str, end: str, start_time: pd.Timestamp) -> Optional[
     Tuple[List[Tuple[str, str, str, pd.Timestamp, pd.Timestamp]], pd.Timedelta]]:
     if not (graph.has_node(start) and graph.has_node(end)):
