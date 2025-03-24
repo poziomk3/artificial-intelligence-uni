@@ -5,13 +5,13 @@ import logging
 from typing import Tuple, List, Optional
 
 from lab1.optimized.algo_commons import init_algo
-from lab1.optimized.utils import log_route_info, format_algo_result
+from lab1.optimized.utils import print_info, print_result
 
 
-@format_algo_result
-@log_route_info(algo_name="Djikstra with time")
+@print_result
+@print_info(algo_name="Djikstra with time")
 def dijkstra_fastest_route(graph: nx.DiGraph, start: str, end: str, start_time: pd.Timestamp) -> Optional[
-    Tuple[List[Tuple[str, str, str, pd.Timestamp, pd.Timestamp]], pd.Timedelta]]:
+    Tuple[List[Tuple[str, str, str, pd.Timestamp, pd.Timestamp]], pd.Timedelta, int]]:
     if not (graph.has_node(start) and graph.has_node(end)):
         return None
 
@@ -21,12 +21,12 @@ def dijkstra_fastest_route(graph: nx.DiGraph, start: str, end: str, start_time: 
 
     pq = []
     heapq.heappush(pq, (0, start, start_time, []))
-
+    checked_nodes = 0
     while pq:
         current_cost, current_stop, arrival_time, path = heapq.heappop(pq)
-
+        checked_nodes += 1
         if current_stop == end:
-            return path, arrival_time - start_time
+            return path, arrival_time - start_time, checked_nodes
 
         graph.nodes[current_stop]["visited"] = True
 
@@ -51,6 +51,7 @@ def dijkstra_fastest_route(graph: nx.DiGraph, start: str, end: str, start_time: 
 
                 new_path = path + [
                     (current_stop, neighbor, best_route.line, best_route.departure_time, best_route.arrival_time)]
+
                 heapq.heappush(pq, (total_cost, neighbor, best_route.arrival_time, new_path))
 
     return None

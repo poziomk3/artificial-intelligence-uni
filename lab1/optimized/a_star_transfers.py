@@ -4,18 +4,18 @@ import pandas as pd
 from typing import Tuple, List, Optional
 
 from lab1.optimized.algo_commons import init_algo
-from lab1.optimized.utils import log_route_info, format_algo_result
+from lab1.optimized.utils import print_info, print_result
 
 
-@format_algo_result
-@log_route_info(algo_name="A* with line changes")
+@print_result
+@print_info(algo_name="A* with line changes")
 def a_star_minimize_line_changes(
         graph: nx.DiGraph,
         start: str,
         end: str,
         start_time: pd.Timestamp,
         heuristic_func
-) -> Optional[Tuple[List[Tuple[str, str, str, pd.Timestamp, pd.Timestamp]], int]]:
+) -> Optional[Tuple[List[Tuple[str, str, str, pd.Timestamp, pd.Timestamp]], int, int]]:
     if not (graph.has_node(start) and graph.has_node(end)):
         return None
 
@@ -34,7 +34,7 @@ def a_star_minimize_line_changes(
         closed_set.add(current_stop)
 
         if current_stop == end:
-            return path, line_changes
+            return path, line_changes, len(closed_set)
 
         for neighbor in graph.neighbors(current_stop):
             if neighbor in closed_set:

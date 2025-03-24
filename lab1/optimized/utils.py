@@ -2,21 +2,31 @@ import time
 import functools
 
 
-def log_route_info(algo_name="Unknown"):
+import functools
+import time
+
+import functools
+import time
+
+def print_info(algo_name="Unknown"):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             try:
-                start = args[1]  # 2nd argument
-                end = args[2]  # 3rd argument
-                start_time = args[3]  # 4th argument
+                start = args[1]
+                end = args[2]
+                start_time = args[3]
+                heuristic_func = args[4] if len(args) > 4 and callable(args[4]) else None
             except IndexError:
                 start = end = start_time = "N/A"
+                heuristic_func = None
 
             print(f"\n[ALGORITHM: {algo_name}]")
-            print(f"  Start:      {start}")
-            print(f"  End:        {end}")
-            print(f"  Start time: {start_time.strftime('%H:%M:%S')}")
+            print(f"  Start:         {start}")
+            print(f"  End:           {end}")
+            print(f"  Start time:    {start_time.strftime('%H:%M:%S') if hasattr(start_time, 'strftime') else start_time}")
+            if heuristic_func:
+                print(f"  Heuristic:     {heuristic_func.__name__}")
             print("  Computing...")
 
             start_clock = time.time()
@@ -24,6 +34,11 @@ def log_route_info(algo_name="Unknown"):
             end_clock = time.time()
 
             print(f"  Execution time: {end_clock - start_clock:.4f} seconds")
+
+            # Try to extract and print the number of checked nodes (assumed to be last element in tuple)
+            if isinstance(result, tuple) and isinstance(result[-1], int):
+                print(f"  Checked nodes: {result[-1]}")
+
             return result
 
         return wrapper
@@ -31,16 +46,18 @@ def log_route_info(algo_name="Unknown"):
     return decorator
 
 
-def format_algo_result(func):
+
+
+def print_result(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
-
+        # return result
         if result is None:
             print("⚠️ No valid route found.")
             return None
 
-        path_edges, cost = result
+        path_edges, cost,checked_nodes = result
 
         if not path_edges:
             print("⚠️ No valid path found.")

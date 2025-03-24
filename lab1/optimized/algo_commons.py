@@ -2,6 +2,7 @@ from typing import Tuple, Optional, List
 
 import networkx as nx
 import pandas as pd
+import math
 
 
 def init_algo(graph: nx.DiGraph, start_stop: str):
@@ -15,11 +16,6 @@ def init_algo(graph: nx.DiGraph, start_stop: str):
 
 
 def print_algo_result(result: Optional[Tuple[List[Tuple[str, str, str, pd.Timestamp, pd.Timestamp]], pd.Timedelta]]):
-    """
-    Prints the route result from either Dijkstra or A* algorithm.
-
-    :param result: The output of a shortest-path algorithm, containing a list of edges and total travel time.
-    """
     if result is None:
         print("⚠️ No valid route found.")
         return
@@ -56,3 +52,43 @@ def manhattan_distance(start_stop, end_stop):
 
 def euclidean_distance(start_stop, end_stop):
     return ((start_stop["lat"] - end_stop["lat"]) ** 2 + (start_stop["lon"] - end_stop["lon"]) ** 2) ** 0.5
+
+
+EARTH_RADIUS_KM = 6371.0
+MAX_TRANSIT_SPEED_KMPH = 40
+
+
+def haversine_time_estimate(start_stop, end_stop):
+    """
+    Estimate travel time (in minutes) between two stops using Haversine distance and max speed.
+    """
+    lat1, lon1 = math.radians(start_stop["lat"]), math.radians(start_stop["lon"])
+    lat2, lon2 = math.radians(end_stop["lat"]), math.radians(end_stop["lon"])
+
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    distance_km = EARTH_RADIUS_KM * c
+
+    estimated_time_minutes = (distance_km / MAX_TRANSIT_SPEED_KMPH) * 60
+    return estimated_time_minutes
+
+
+AVG_LINE_COVERAGE_KM = 3.0
+
+
+def haversine_line_change_estimate(start_stop, end_stop):
+    lat1, lon1 = math.radians(start_stop["lat"]), math.radians(start_stop["lon"])
+    lat2, lon2 = math.radians(end_stop["lat"]), math.radians(end_stop["lon"])
+
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    distance_km = EARTH_RADIUS_KM * c
+
+    estimated_changes = distance_km / AVG_LINE_COVERAGE_KM
+    return estimated_changes
