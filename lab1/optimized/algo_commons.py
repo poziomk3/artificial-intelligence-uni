@@ -56,12 +56,7 @@ def euclidean_distance(start_stop, end_stop):
 
 EARTH_RADIUS_KM = 6371.0
 MAX_TRANSIT_SPEED_KMPH = 40
-
-
 def haversine_time_estimate(start_stop, end_stop):
-    """
-    Estimate travel time (in minutes) between two stops using Haversine distance and max speed.
-    """
     lat1, lon1 = math.radians(start_stop["lat"]), math.radians(start_stop["lon"])
     lat2, lon2 = math.radians(end_stop["lat"]), math.radians(end_stop["lon"])
 
@@ -76,7 +71,7 @@ def haversine_time_estimate(start_stop, end_stop):
     return estimated_time_minutes
 
 
-AVG_LINE_COVERAGE_KM = 3.0
+AVG_LINE_COVERAGE_KM = 10.0
 
 
 def haversine_line_change_estimate(start_stop, end_stop):
