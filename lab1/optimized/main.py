@@ -12,7 +12,7 @@ import pandas as pd
 import time
 
 from lab1.optimized.tabu import tabu_search
-from lab1.optimized.tabu_b import tabu_search_b
+from lab1.optimized.tabu_b import tabu_search_full
 
 FILE_PATH = "../connection_graph.csv"
 GRAPH_FILE = "graph.gpickle"
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     # a_star_fastest_route_optimized(graph, start_stop, end_stop, start_time, haversine_time_estimate)
     # #
     start_stop = "DWORZEC AUTOBUSOWY"
-    checkpoints = ["Kiełczów - pętla/Wrocławska", "EPI", "Vivaldiego", "Pułaskiego"]
+    checkpoints = ["Kiełczów - pętla/Wrocławska", "EPI", "Vivaldiego", "Pułaskiego", "Rynek"]
 
     full_path, cost = tabu_search(graph, start_stop, checkpoints, "t", start_time)
 
