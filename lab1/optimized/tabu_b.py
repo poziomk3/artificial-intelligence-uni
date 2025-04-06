@@ -52,7 +52,6 @@ def tabu_search_full(graph, start, checkpoints, criterion, start_time, iteration
         # (b) aktualizacja tabu listy
         tabu_list.append(tuple(best_solution))
 
-        # jeśli nie było poprawy – przerwij
         if not improved:
             break
 

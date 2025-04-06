@@ -43,13 +43,11 @@ def a_star_fastest_route_optimized(
     while pq:
         f_cost, g_cost, _, current_stop, arrival_time, path = heapq.heappop(pq)
 
-        # Odwiedzony wcześniej z lepszym czasem – pomiń
         if current_stop in visited_times and arrival_time >= visited_times[current_stop]:
             continue
 
         visited_times[current_stop] = arrival_time
 
-        # Jeśli osiągnięto cel – sprawdź, czy to najlepsze rozwiązanie
         if current_stop == end:
             if best_arrival_time is None or arrival_time < best_arrival_time:
                 best_arrival_time = arrival_time

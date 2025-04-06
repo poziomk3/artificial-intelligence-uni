@@ -28,21 +28,24 @@ if __name__ == "__main__":
 
     # dijkstra_fastest_route(graph, start_stop, end_stop, start_time)
 
-    # a_star_minimize_line_changes(graph, start_stop, end_stop, start_time, manhattan_distance)
-    # a_star_minimize_line_changes(graph, start_stop, end_stop, start_time, haversine_line_change_estimate)
-    # a_star_optimized_line_changes(graph, start_stop, end_stop, start_time, haversine_line_change_estimate)
+    a_star_minimize_line_changes(graph, start_stop, end_stop, start_time, manhattan_distance)
+    a_star_minimize_line_changes(graph, start_stop, end_stop, start_time, haversine_line_change_estimate)
+    a_star_optimized_line_changes(graph, start_stop, end_stop, start_time, haversine_line_change_estimate)
 
-    # a_star_fastest_route(graph, start_stop, end_stop, start_time, manhattan_distance)
-    # a_star_fastest_route(graph, start_stop, end_stop, start_time, haversine_time_estimate)
-    # a_star_fastest_route_optimized(graph, start_stop, end_stop, start_time, haversine_time_estimate)
-    # #
-    start_stop = "DWORZEC AUTOBUSOWY"
-    checkpoints = ["Kiełczów - pętla/Wrocławska", "EPI", "Vivaldiego", "Pułaskiego", "Rynek"]
+    a_star_fastest_route(graph, start_stop, end_stop, start_time, manhattan_distance)
+    a_star_fastest_route(graph, start_stop, end_stop, start_time, haversine_time_estimate)
+    a_star_fastest_route_optimized(graph, start_stop, end_stop, start_time, haversine_time_estimate)
+    #
+    # start_stop = "DWORZEC AUTOBUSOWY"
+    # checkpoints = ["Kiełczów - pętla/Wrocławska",
+    #                "EPI", "Vivaldiego",
+    #                # "Pułaskiego",
+    #                # "Rynek"
+    #                ]
+    #
+    # full_path, cost = tabu_search(graph, start_stop, checkpoints, "t", start_time)
+    #
+    # for step in full_path:
+    #     src, dst, line, dep_time, arr_time = step
+    #     print(f"{line} {dep_time.time()} {src} -> {arr_time.time()} {dst}")
 
-    full_path, cost = tabu_search(graph, start_stop, checkpoints, "t", start_time)
-
-    for step in full_path:
-        src, dst, line, dep_time, arr_time = step
-        print(f"{line} {dep_time.time()} {src} -> {arr_time.time()} {dst}")
-
-    print(f"\nKoszt: {cost}")

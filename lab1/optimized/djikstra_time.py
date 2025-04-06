@@ -33,7 +33,7 @@ def dijkstra_fastest_route(graph: nx.DiGraph, start: str, end: str, start_time: 
         for neighbor in graph.neighbors(current_stop):
             route_options = graph[current_stop][neighbor]["data"]
 
-            valid_routes = [r for r in route_options if r.departure_time >= arrival_time]
+            valid_routes = [r for r in route_options if r.departure_time >= arrival_time ]
 
             if not valid_routes:
                 continue
