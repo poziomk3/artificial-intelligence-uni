@@ -3,8 +3,8 @@ import copy
 
 class Clobber:
     def __init__(self, board, current_player='B'):
-        self.board = board  # plansza jako lista list
-        self.current_player = current_player  # 'B' albo 'W'
+        self.board = board
+        self.current_player = current_player
 
     def get_opponent(self):
         return 'W' if self.current_player == 'B' else 'B'
@@ -13,7 +13,7 @@ class Clobber:
         moves = []
         rows = len(self.board)
         cols = len(self.board[0])
-        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # góra, dół, lewo, prawo
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
         for i in range(rows):
             for j in range(cols):

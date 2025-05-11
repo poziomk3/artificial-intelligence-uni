@@ -11,7 +11,6 @@ async def handle_player(websocket):
     global players, game
 
     if game is not None:
-        print("Nowy gracz próbował dołączyć, ale gra już trwa.")
         await websocket.close()
         return
 
@@ -22,20 +21,17 @@ async def handle_player(websocket):
         await websocket.send(json.dumps({"type": "wait"}))
         await asyncio.sleep(0.1)
 
-    # Sprawdzenie połączeń
     await asyncio.sleep(0.2)
     try:
         for p in players:
             await p.send(json.dumps({"type": "ping"}))
     except Exception as e:
-        print("Jeden z graczy się rozłączył przed startem gry.")
         return
 
-    # Start gry – tylko raz
     if websocket == players[0]:
         asyncio.create_task(run_game())
 
-    await asyncio.Future()  # trzyma połączenie aktywne
+    await asyncio.Future()
 
 
 async def run_game():
