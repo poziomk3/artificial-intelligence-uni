@@ -2,11 +2,7 @@ from Clobber import Clobber
 
 
 def heuristic_1(game: Clobber):
-    """Różnica liczby możliwych ruchów między graczem a przeciwnikiem"""
-    own_moves = len(game.get_valid_moves())
-    opponent_game = Clobber(game.board, game.get_opponent())
-    opponent_moves = len(opponent_game.get_valid_moves())
-    return own_moves - opponent_moves
+    return 0
 
 
 def heuristic_2(game: Clobber):

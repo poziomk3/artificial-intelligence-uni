@@ -46,7 +46,14 @@ def run_game(start_board, heuristic, search_depth=4, use_alphabeta=False, verbos
 
 def run_test(heur_name, heuristic_func, depth=DEPTH, alphabeta=True):
     print(f"Test: 5x6 board | {heur_name} | depth {depth} | {'alpha-beta' if alphabeta else 'minimax'}")
-    board = generate_initial_board()
+    custom_board = [
+            ['B', '_', 'W', '_', 'B', '_'],
+            ['B', 'W', '_', 'B', 'B', 'W'],
+            ['W', 'W', 'B', '_', 'W', 'B'],
+            ['_', 'B', '_', 'W', '_', 'B'],
+            ['B', 'W', 'W', '_', 'B', '_']
+        ]
+    board = generate_initial_board(5,6)
     run_game(board, heuristic_func, search_depth=depth, use_alphabeta=alphabeta, verbose=False)
 
 
