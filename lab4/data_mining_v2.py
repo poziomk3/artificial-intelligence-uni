@@ -2,14 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# 1. Wczytanie danych
 df = pd.read_csv("cardiotocography_v2.csv")
 
-# 2. Statystyki opisowe
 print("Podstawowe statystyki:")
 print(df.describe())
 
-# 3. Rozkład klas
 class_counts = df["CLASS"].value_counts().sort_index()
 print("\nRozkład klas:")
 print(class_counts)
@@ -23,7 +20,6 @@ plt.grid(axis='y')
 plt.tight_layout()
 plt.show()
 
-# 4. Braki danych
 missing_values = df.isnull().sum().sort_values(ascending=False)
 print("\nBrakujące wartości:")
 print(missing_values[missing_values > 0])

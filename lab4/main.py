@@ -3,7 +3,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import SelectKBest, f_classif
-from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import GaussianNB, MultinomialNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report, confusion_matrix
@@ -42,7 +42,6 @@ def get_classifiers():
     dt3 = DecisionTreeClassifier(max_depth=None, min_samples_split=20, min_samples_leaf=10, random_state=80)
 
     rf = RandomForestClassifier(n_estimators=100, max_depth=8, min_samples_leaf=3, random_state=42)
-
     return {
         'NB-smooth=1e-9': nb1,
         'NB-smooth=1e-4': nb2,
